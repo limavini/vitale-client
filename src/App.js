@@ -3,7 +3,8 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { Homepage } from "./pages/Homepage";
 import { About } from "./pages/About";
-import { Header } from "./components/Header";
+import UserContextProvider from "./UserContext";
+// import { Header } from "./components/Header";
 import { Switch, Route } from "react-router-dom";
 
 const client = new ApolloClient({
@@ -12,15 +13,17 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <div id="main">
-        {/* <Header /> */}
+    <UserContextProvider>
+      <ApolloProvider client={client}>
+        <div id="main">
+          {/* <Header /> */}
           <Switch>
             <Route path="/" exact component={Homepage} />
-            <Route path="/about"  component={About} />
+            <Route path="/about" component={About} />
           </Switch>
-      </div>
-    </ApolloProvider>
+        </div>
+      </ApolloProvider>
+    </UserContextProvider>
   );
 }
 

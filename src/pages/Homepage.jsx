@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import backgroundImage from "../assets/food.jpg";
 import { HeaderLink } from "../components/Header";
@@ -7,6 +7,8 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/apple.svg";
+import { UserContext } from "../UserContext";
+import axios from "axios";
 
 const BannerContainer = styled.div`
   background-image: url(${backgroundImage});
@@ -71,6 +73,7 @@ const SignInText = styled(Link)`
   display: block;
   text-decoration: none;
   color: inherit;
+  width: fit-content;
 
   &:hover {
     text-decoration: underline;
@@ -81,13 +84,36 @@ const LogoContainer = styled.div`
   padding-top: 3px;
   padding-left: 10px;
 `;
-export const Homepage = () => {
+export const Homepage = props => {
+  const userCtx = useContext(UserContext);
+  const { changeUser, user: activeUser } = userCtx;
+
+  console.log({ activeUser });
   const [user, setUser] = useState({ email: "", password: "" });
 
   const handleChange = event => {
     const { name, value } = event.target;
 
     setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:4000/auth/login",
+        data: {
+          ...user
+        }
+      });
+
+      if (response.status === 200){
+        props.history.push("/about")
+      }
+    } catch ({response}) {
+     const {data: { message }} = response;
+     alert(message);
+    }
   };
 
   return (
@@ -103,7 +129,10 @@ export const Homepage = () => {
         </Header>
         <TextContainer>
           <Title>
-            VITALE <LogoContainer><Logo fill="#ff206e" height={57} width={57} /></LogoContainer>
+            VITALE{" "}
+            <LogoContainer>
+              <Logo fill="#ff206e" height={57} width={57} />
+            </LogoContainer>
           </Title>
 
           <Description>
@@ -118,19 +147,25 @@ export const Homepage = () => {
                 type="text"
                 value={user.email}
                 name="email"
+                required
                 onChange={handleChange}
+                autoComplete="current-email"
                 label="E-mail"
               />
               <Input
                 type="password"
                 value={user.password}
                 name="password"
+                required
                 onChange={handleChange}
+                autoComplete="current-password"
                 label="Senha"
               />
               <SignInText to="/about">Ainda não tem uma conta?</SignInText>
               <ButtonContainer>
-                <Button>Entrar</Button>
+                <Button type="button" onClick={handleSubmit}>
+                  Entrar
+                </Button>
               </ButtonContainer>
             </form>
           </Panel>
