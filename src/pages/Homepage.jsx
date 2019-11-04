@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import backgroundImage from "../assets/food.jpg";
-import { HeaderLink } from "../components/Header";
 import { Panel } from "../components/Panel";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
@@ -17,6 +16,9 @@ const BannerContainer = styled.div`
   background-position: center;
   height: 100vh;
   width: 100vw;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
 `;
 
 const Content = styled.div`
@@ -25,13 +27,8 @@ const Content = styled.div`
   width: 60%;
 `;
 
-const Header = styled.div`
-  text-align: right;
-  padding: 20px 60px;
-`;
-
 const TextContainer = styled.div`
-  padding: 40px 60px;
+  padding: 80px 60px 60px 60px;
 `;
 
 const Title = styled.h1`
@@ -85,10 +82,7 @@ const LogoContainer = styled.div`
   padding-left: 10px;
 `;
 export const Homepage = props => {
-  const userCtx = useContext(UserContext);
-  const { changeUser, user: activeUser } = userCtx;
-
-  console.log({ activeUser });
+  const { changeUser } = useContext(UserContext);
   const [user, setUser] = useState({ email: "", password: "" });
 
   const handleChange = event => {
@@ -107,26 +101,21 @@ export const Homepage = props => {
         }
       });
 
-      if (response.status === 200){
-        props.history.push("/about")
+      if (response.status === 200) {
+        changeUser({ ...response.data });
+        props.history.push("/about");
       }
-    } catch ({response}) {
-     const {data: { message }} = response;
-     alert(message);
+    } catch ({ response }) {
+      const {
+        data: { message }
+      } = response;
+      alert(message);
     }
   };
 
   return (
     <BannerContainer imgUrl="../assets/food_max.jpg">
       <Content>
-        <Header>
-          <HeaderLink exact to="/" activeClassName="selected">
-            Home
-          </HeaderLink>
-          <HeaderLink exact to="/about" activeClassName="selected">
-            Sobre
-          </HeaderLink>
-        </Header>
         <TextContainer>
           <Title>
             VITALE{" "}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -9,7 +10,8 @@ const HeaderContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: lightred;
-  padding: 20px 0;
+  text-align: right;
+  padding: 20px 60px 60px 60px;
 `;
 
 const HeaderLogo = styled.div`
@@ -31,6 +33,8 @@ export const HeaderLink = styled(NavLink)`
 `;
 
 export const Header = () => {
+  const { user, logOut } = useContext(UserContext);
+  console.log({user})
   return (
     <HeaderContainer>
       <HeaderLogo>VITALE</HeaderLogo>
@@ -41,9 +45,10 @@ export const Header = () => {
         <HeaderLink exact to="/about" activeClassName="selected">
           Sobre
         </HeaderLink>
-        <HeaderLink exact to="/login" activeClassName="selected">
-          Entrar
-        </HeaderLink>
+        {(user && <HeaderLink onClick={logOut}exact to="/" activeClassName="selected">
+          Sair
+        </HeaderLink>)}
+        
       </HeaderLinkContainer>
     </HeaderContainer>
   );
