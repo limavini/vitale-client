@@ -48,7 +48,9 @@ const Description = styled.p`
 const PanelContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding: 40px;
+  padding: 40px 0px;
+  width: 350px;
+  margin: auto;
 `;
 
 const PanelHeading = styled.p`
@@ -150,9 +152,9 @@ export const Homepage = props => {
                 autoComplete="current-password"
                 label="Senha"
               />
-              <SignInText to="/about">Ainda não tem uma conta?</SignInText>
+              <SignInText to="/register">Ainda não tem uma conta?</SignInText>
               <ButtonContainer>
-                <Button type="button" onClick={handleSubmit}>
+                <Button background="#FF206E" type="button" onClick={handleSubmit}>
                   Entrar
                 </Button>
               </ButtonContainer>

@@ -34,7 +34,7 @@ export const HeaderLink = styled(NavLink)`
 
 export const Header = () => {
   const { user, logOut } = useContext(UserContext);
-  console.log({user})
+
   return (
     <HeaderContainer>
       <HeaderLogo>VITALE</HeaderLogo>
