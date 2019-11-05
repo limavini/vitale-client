@@ -83,6 +83,7 @@ const LogoContainer = styled.div`
   padding-top: 3px;
   padding-left: 10px;
 `;
+
 export const Homepage = props => {
   const { changeUser } = useContext(UserContext);
   const [user, setUser] = useState({ email: "", password: "" });

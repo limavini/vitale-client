@@ -4,6 +4,8 @@ import { ApolloProvider } from "react-apollo";
 import { Homepage } from "./pages/Homepage";
 import { About } from "./pages/About";
 import { SignIn } from "./pages/SignIn";
+import { PatientDetails } from "./pages/PatientDetails";
+import { PatientList } from "./pages/PatientList";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import UserContextProvider from "./UserContext";
 import { Header } from "./components/Header";
@@ -24,6 +26,8 @@ function App() {
             <Route path="/" exact component={Homepage} />
             <Route path="/register" exact component={SignIn} />
             <ProtectedRoute path="/about" component={About} />
+            <ProtectedRoute path="/patients/:id" component={PatientDetails} />
+            <ProtectedRoute exact path="/patients" component={PatientList} />
           </Switch>
         </div>
       </ApolloProvider>

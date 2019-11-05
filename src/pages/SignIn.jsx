@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { UserContext } from "../UserContext";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Panel } from "../components/Panel";
@@ -8,7 +10,6 @@ import { useMutation } from "@apollo/react-hooks";
 
 const Container = styled.div`
   padding: 60px 120px;
-  border: 1px solid blue;
   background-color: #fdff93;
   min-height: 100vh;
   padding-top: 120px;
@@ -41,11 +42,12 @@ const ADD_USER = gql`
       id
       name
       password
+      email
     }
   }
 `;
 
-export const SignIn = () => {
+export const SignIn = ({ history }) => {
   const [user, setUser] = useState({
     name: "",
     password: "",
@@ -53,9 +55,8 @@ export const SignIn = () => {
     confirmationPassword: ""
   });
 
-  
-  const [addUser, { data }] = useMutation(ADD_USER);
-  console.log({data});
+  const { changeUser } = useContext(UserContext);
+  const [addUser] = useMutation(ADD_USER);
   const enabled =
     user.name && user.password && user.email && user.confirmationPassword;
 
@@ -72,11 +73,25 @@ export const SignIn = () => {
     }
 
     try {
-      const test = await addUser({
+      const response = await addUser({
         variables: { ...user }
       });
 
-      console.log({test})
+      const { email, password } = response.data.addUser;
+      
+      const login = await axios({
+        method: "post",
+        url: "http://localhost:4000/auth/login",
+        data: {
+          email,
+          password
+        }
+      });
+
+      if (login.status === 200) {
+        await changeUser({ ...login.data });
+        history.push("/patient");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -86,60 +101,62 @@ export const SignIn = () => {
     <Container>
       <Panel>
         <PanelHeading>Comece a sua dieta agora</PanelHeading>
-        <PanelContainer>
-          <InputContainer>
-            <Input
-              type="text"
-              onChange={handleChange}
-              required
-              label="Nome"
-              name="name"
-              value={user.name}
-            />
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="text"
-              onChange={handleChange}
-              required
-              label="E-mail"
-              name="email"
-              value={user.email}
-            />
-          </InputContainer>
-        </PanelContainer>
-        <PanelContainer>
-          <InputContainer>
-            <Input
-              type="password"
-              onChange={handleChange}
-              required
-              label="Senha"
-              name="password"
-              value={user.password}
-            />
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="password"
-              label="Confirmar a senha"
-              name="confirmationPassword"
-              value={user.confirmationPassword}
-              required
-              onChange={handleChange}
-            />
-          </InputContainer>
-        </PanelContainer>
-        <ButtonContainer>
-          <Button
-            disabled={!enabled}
-            type="button"
-            background="#FF206E"
-            onClick={handleSubmit}
-          >
-            ENTRAR
-          </Button>
-        </ButtonContainer>
+        <form>
+          <PanelContainer>
+            <InputContainer>
+              <Input
+                type="text"
+                onChange={handleChange}
+                required
+                label="Nome"
+                name="name"
+                value={user.name}
+              />
+            </InputContainer>
+            <InputContainer>
+              <Input
+                type="email"
+                onChange={handleChange}
+                required
+                label="E-mail"
+                name="email"
+                value={user.email}
+              />
+            </InputContainer>
+          </PanelContainer>
+          <PanelContainer>
+            <InputContainer>
+              <Input
+                type="password"
+                onChange={handleChange}
+                required
+                label="Senha"
+                name="password"
+                value={user.password}
+              />
+            </InputContainer>
+            <InputContainer>
+              <Input
+                type="password"
+                label="Confirmar a senha"
+                name="confirmationPassword"
+                value={user.confirmationPassword}
+                required
+                onChange={handleChange}
+              />
+            </InputContainer>
+          </PanelContainer>
+          <ButtonContainer>
+            <Button
+              disabled={!enabled}
+              type="button"
+              background="#FF206E"
+              onClick={handleSubmit}
+            >
+              ENTRAR
+            </Button>
+          </ButtonContainer>
+        </form>
       </Panel>
     </Container>
   );
