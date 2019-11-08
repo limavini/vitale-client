@@ -37,8 +37,8 @@ const ButtonContainer = styled.div`
 `;
 
 const ADD_USER = gql`
-  mutation SignIn($name: String!, $password: String!, $email: String!) {
-    addUser(name: $name, password: $password, email: $email) {
+  mutation SignIn($name: String!, $password: String!, $email: String!, $type: String!) {
+    addUser(name: $name, password: $password, email: $email, type: $type) {
       id
       name
       password
@@ -52,7 +52,8 @@ export const SignIn = ({ history }) => {
     name: "",
     password: "",
     email: "",
-    confirmationPassword: ""
+    confirmationPassword: "",
+    type: "Doctor"
   });
 
   const { changeUser } = useContext(UserContext);
@@ -78,7 +79,7 @@ export const SignIn = ({ history }) => {
       });
 
       const { email, password } = response.data.addUser;
-      
+      console.log({email, password})
       const login = await axios({
         method: "post",
         url: "http://localhost:4000/auth/login",
@@ -90,7 +91,7 @@ export const SignIn = ({ history }) => {
 
       if (login.status === 200) {
         await changeUser({ ...login.data });
-        history.push("/patient");
+        history.push("/patients");
       }
     } catch (err) {
       console.log(err);
@@ -100,7 +101,7 @@ export const SignIn = ({ history }) => {
   return (
     <Container>
       <Panel>
-        <PanelHeading>Comece a sua dieta agora</PanelHeading>
+        <PanelHeading>Comece a atender seus pacientes agora</PanelHeading>
         <form>
           <PanelContainer>
             <InputContainer>
@@ -151,6 +152,7 @@ export const SignIn = ({ history }) => {
               disabled={!enabled}
               type="button"
               background="#FF206E"
+              hover="#cc1a55"
               onClick={handleSubmit}
             >
               ENTRAR

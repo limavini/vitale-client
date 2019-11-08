@@ -4,7 +4,7 @@ import backgroundImage from "../assets/food.jpg";
 import { Panel } from "../components/Panel";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/apple.svg";
 import { UserContext } from "../UserContext";
 import axios from "axios";
@@ -87,7 +87,7 @@ const LogoContainer = styled.div`
 export const Homepage = props => {
   const { changeUser } = useContext(UserContext);
   const [user, setUser] = useState({ email: "", password: "" });
-
+  const history = useHistory();
   const handleChange = event => {
     const { name, value } = event.target;
 
@@ -106,7 +106,7 @@ export const Homepage = props => {
 
       if (response.status === 200) {
         changeUser({ ...response.data });
-        props.history.push("/about");
+        history.push("/patients");
       }
     } catch ({ response }) {
       const {
@@ -155,7 +155,7 @@ export const Homepage = props => {
               />
               <SignInText to="/register">Ainda não tem uma conta?</SignInText>
               <ButtonContainer>
-                <Button background="#FF206E" type="button" onClick={handleSubmit}>
+                <Button background="#FF206E" hover="#cc1a55" type="button" onClick={handleSubmit}>
                   Entrar
                 </Button>
               </ButtonContainer>

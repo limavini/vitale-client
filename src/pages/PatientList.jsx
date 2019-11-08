@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../UserContext";
 import styled from "styled-components";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Panel } from "../components/Panel";
 import { Loader } from "../components/Loader";
+import { useHistory } from "react-router-dom";
+import { AddPatient } from "../components/AddPatient";
 
 const GET_PATIENTS = gql`
-  {
-    users {
+  query User($doctor: ID) {
+    users(doctor: $doctor) {
       id
       name
       email
@@ -67,22 +70,31 @@ const LoaderContainer = styled.div`
   justify-content: center;
 `;
 
-export const PatientList = ({history}) => {
-  const { loading, data } = useQuery(GET_PATIENTS);
-  console.log({ data });
-  console.log({ loading });
+export const PatientList = () => {
+  const userCtx = useContext(UserContext);
+  if (userCtx.user)
+  var { user: { _id: doctor}} = userCtx;
+  const { loading, data, refetch } = useQuery(GET_PATIENTS, {
+    variables: {
+      doctor
+    },
+  });
 
-  const redirect = id => history.push(`/patients/${id}`)
+  const history = useHistory();
+
+  const redirect = id => history.push(`/patients/${id}`);
   return (
     <Container>
       <Panel>
+        <AddPatient doctor={doctor} refetch={refetch} />
         {loading && (
           <LoaderContainer>
             <Loader />
           </LoaderContainer>
         )}
 
-        {!loading && (
+        {!loading && 
+         data.users && (
           <UsersTable>
             <TableHeader>
               <TableHeadRow>
