@@ -1,7 +1,6 @@
 import React from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { Homepage } from "./pages/Homepage";
 import { About } from "./pages/About";
 import { SignIn } from "./pages/SignIn";
 import { PatientDetails } from "./pages/PatientDetails";

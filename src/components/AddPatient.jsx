@@ -3,34 +3,9 @@ import styled from "styled-components";
 import { Button } from "./Button";
 import Modal from "react-modal";
 import { Input } from "./Input";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-
-const ADD_PATIENT = gql`
-    mutation addPatient($name: String!, $password: String!, $email: String!, $doctor: ID, $type: String!) {
-    addUser(name: $name, password: $password, email: $email, doctor: $doctor, type: $type) {
-      id
-      name
-      email
-    }
-  }
-`;
-
-const customStyles = {
-  content: {
-    top: "35%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    border: "none",
-    borderRadius: 5,
-    width: 450,
-    padding: "30px 75px",
-    textAlign: "center"
-  }
-};
+import { modalStyles } from "../styles/general";
+import { ADD_PATIENT } from "../queries";
 
 const PanelHeading = styled.h1`
   margin: 0;
@@ -79,7 +54,7 @@ export const AddPatient = ({doctor, refetch}) => {
       <Modal
         isOpen={openModal}
         onRequestClose={() => setOpenModal(false)}
-        style={customStyles}
+        style={modalStyles}
         contentLabel="Example Modal"
       >
         <PanelHeading>Novo paciente</PanelHeading>
