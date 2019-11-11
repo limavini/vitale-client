@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import Modal from "react-modal";
 import { modalStyles } from "../styles/general";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_DIET } from "../queries";
-
-const ModalHeading = styled.h2`
-  margin: 0;
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 25px;
-`;
+import { ModalHeading, ButtonContainer } from "../styles/ModalForm.styles";
 
 export const AddDiet = ({refetch, userID}) => {
   const [openModal, setOpenModal] = useState(false);
@@ -40,7 +32,6 @@ export const AddDiet = ({refetch, userID}) => {
     setDiet({name: value});
   };
 
-  console.log({diet})
   return (
     <>
       <Modal
@@ -76,7 +67,7 @@ export const AddDiet = ({refetch, userID}) => {
         background="#FF206E"
         hover="#cc1a55"
       >
-        Começar
+        Nova Dieta
       </Button>
     </>
   );

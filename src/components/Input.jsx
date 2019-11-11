@@ -10,7 +10,7 @@ const CustomInput = styled.input`
   width: 100%;
   background: none;
   background-color: white;
-  color: #4E504C;
+  color: #4e504c;
   font-size: 18px;
   padding: 10px 10px 10px 5px;
   display: block;
@@ -42,9 +42,19 @@ const Label = styled.label`
   transition: 200ms ease all;
 `;
 
-export const Input = ({ label, value, ...props }) => (
+const IconContainer = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  cursor: pointer;
+`;
+
+export const Input = ({ label, value, children, ...props }) => {
+  
+  return (
   <Group>
-    <CustomInput {...props} />
+    <CustomInput value={value} {...props} />
     {label && <Label shrink={value}>{label}</Label>}
+    {value && <IconContainer>{children}</IconContainer>}
   </Group>
-);
+)};

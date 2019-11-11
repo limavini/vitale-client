@@ -30,7 +30,20 @@ export const GET_USER = gql`
       diets {
         id
         name
+        createdAt
+        meals {
+          foods
+          schedule
+        }
       }
+    }
+  }
+`;
+
+export const ADD_MEAL = gql`
+  mutation addMeal($diet: ID!, $foods: [String]!, $schedule: String!, $name: String!) {
+    addMeal(diet: $diet, foods: $foods, schedule: $schedule, name: $name) {
+      id
     }
   }
 `;
