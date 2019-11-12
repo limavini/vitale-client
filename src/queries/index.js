@@ -32,6 +32,7 @@ export const GET_USER = gql`
         name
         createdAt
         meals {
+          id
           name
           foods
           schedule
@@ -44,6 +45,14 @@ export const GET_USER = gql`
 export const ADD_MEAL = gql`
   mutation addMeal($diet: ID!, $foods: [String]!, $schedule: String!, $name: String!) {
     addMeal(diet: $diet, foods: $foods, schedule: $schedule, name: $name) {
+      id
+    }
+  }
+`;
+
+export const REMOVE_MEAL = gql`
+  mutation removeMeal($id: ID!) {
+    removeMeal(id: $id) {
       id
     }
   }

@@ -39,7 +39,7 @@ export const DietDetails = ({ diet, refetch, userID }) => {
             </div>
             <AddMeal dietID={id} refetch={refetch}/>
           </PanelHeading>
-          <MealList meals={diet[0].meals}/>
+          <MealList meals={diet[0].meals} refetch={refetch}/>
         </Panel>
       )}
       {!id && <NoDiet refetch={refetch} userID={userID} />}
