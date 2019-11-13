@@ -64,8 +64,8 @@ export const AddDiet = ({refetch, userID}) => {
       </Modal>
       <Button
         onClick={() => setOpenModal(true)}
-        background="#FF206E"
-        hover="#cc1a55"
+        background="#FB5012"
+        hover="#A0330C"
       >
         Nova Dieta
       </Button>

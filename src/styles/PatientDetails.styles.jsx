@@ -19,14 +19,12 @@ export const GeneralContainer = styled.div`
 `;
 
 export const DietsContainer = styled.div`
-border: 1px solid orange;
 width: 100%;
 padding: 40px
 flex: 2;
 `;
 
 export const InfoContainer = styled.div`
-  border: 1px solid blue;
   width: 100%;
   flex: 1;
   padding: 40px;

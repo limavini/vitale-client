@@ -83,7 +83,7 @@ export const MealList = ({ meals, refetch }) => {
             <ItemHead>
               <Schedule>
                 {format(
-                  addHours(new Date(parseInt(meal.schedule)), 1),
+                  addHours(new Date(parseInt(meal.schedule)), 0),
                   "HH:mm",
                   {
                     locale: ptBR

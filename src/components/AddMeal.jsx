@@ -37,6 +37,7 @@ export const AddMeal = ({refetch, dietID}) => {
     }});
     setOpenModal(false);
     refetch();
+    setMeal({ schedule: "00:00", food: "", foods: [], name: "" });
   };
 
   const addFood = () => {
