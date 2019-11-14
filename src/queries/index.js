@@ -20,6 +20,16 @@ export const ADD_DIET = gql`
   }
 `;
 
+export const EDIT_DIET = gql`
+  mutation editDiet($diet: ID!, $name: String!) {
+    editDiet (diet: $diet, name: $name) {
+      id
+      name
+      createdAt
+    }
+  }
+`;
+
 export const GET_USER = gql`
   query userQuery($userID: ID!) {
     user(id: $userID) {

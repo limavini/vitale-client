@@ -7,7 +7,13 @@ import { NoDiet } from "./NoDiet";
 import format from "date-fns/format";
 import { ptBR } from "date-fns/locale";
 import { AddMeal } from "./AddMeal";
-import { PanelHeading, HeadFirstline, DietDate, DietName } from "../styles/DietDetails.styles"
+import { EditDiet } from "./EditDiet";
+import {
+  PanelHeading,
+  HeadFirstline,
+  DietDate,
+  DietName
+} from "../styles/DietDetails.styles";
 
 export const DietDetails = ({ diet, refetch, userID }) => {
   if (diet) var { id, name, createdAt } = diet;
@@ -20,7 +26,9 @@ export const DietDetails = ({ diet, refetch, userID }) => {
             <div>
               <HeadFirstline>
                 <DietName>{name}</DietName>
-                <Pencil height={15} width={15} fill="#d0d4d8" />
+                <EditDiet dietName={diet.name} dietID={diet.id} refetch={refetch}>
+                  <Pencil height={15} width={15} fill="#d0d4d8" />
+                </EditDiet>
                 <Bin height={15} width={15} fill="#d0d4d8" />
               </HeadFirstline>
               <DietDate>
