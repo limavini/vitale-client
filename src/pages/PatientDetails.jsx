@@ -18,13 +18,38 @@ export const PatientDetails = ({
     params: { id: userID }
   }
 }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getActiveDiet = (dietID, removing) => {
+    
+    if (data) {
+      let { diets } = data.user;
+
+      if (diets.length && dietID && !removing) {
+        return diets.filter(diet => diet.id === dietID)[0];
+      } else if (removing && diets.length) {
+        return diets.filter(diet => diet.id !== dietID)[0];
+      } else if (diets.length) {
+        return diets[0]
+      }
+    }
+    return false;
+  };
+
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const { loading, data, refetch } = useQuery(GET_USER, {
     variables: {
       userID
     }
   });
+
+  if (activeIndex === null && activeIndex !== false && data) {
+    setActiveIndex(getActiveDiet());
+  }
+
+  // React.useEffect(() =>  setActiveIndex(getActiveDiet()), [getActiveDiet])
+
 
   return (
     <Container>
@@ -39,15 +64,18 @@ export const PatientDetails = ({
           <DietsContainer>
             <UserBasicInfo user={data.user} />
             <DietDetails
-              refetch={refetch}
+              refetch={(id) => {
+                setActiveIndex(getActiveDiet(id, true));
+                refetch();
+              }}
               userID={data.user.id}
-              diet={data.user.diets[activeIndex]}
+              diet={activeIndex}
             />
           </DietsContainer>
           <InfoContainer>
             <InfoList
               setActiveIndex={index => {
-                if (index !== activeIndex) setActiveIndex(index);
+                setActiveIndex(getActiveDiet(index));
               }}
               diets={data.user.diets}
               userID={data.user.id}

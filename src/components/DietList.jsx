@@ -17,5 +17,5 @@ const Diet = styled.li`
 `;
 
 export const DietList = ({diets, setActiveIndex}) => {
-    return diets.map((diet, index) => <Diet onClick={() => setActiveIndex(index)} key={diet.id}>{diet.name}</Diet>)
+    return diets.map((diet, index) => <Diet onClick={() => setActiveIndex(diet.id)} key={diet.id}>{diet.name}</Diet>)
 }
