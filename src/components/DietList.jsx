@@ -1,6 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-export const DietList = ({diets}) => {
-    return diets.map(diet => <li key={diet.id}>{diet.name}</li>)
+const Diet = styled.li`
+    padding: 10px 5px;
+
+    border-bottom: 2px solid #f3f3f3;
+
+    &:hover {
+        background-color: #f3f3f3;
+        cursor: pointer;
+    }
+  
+    &:last-child {
+      border-bottom: none;
+    }
+`;
+
+export const DietList = ({diets, setActiveIndex}) => {
+    return diets.map((diet, index) => <Diet onClick={() => setActiveIndex(index)} key={diet.id}>{diet.name}</Diet>)
 }

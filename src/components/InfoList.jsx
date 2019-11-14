@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Panel } from "../components/Panel";
 import { DietList } from "../components/DietList";
 import { MeasureList } from "../components/MeasureList";
@@ -7,7 +6,7 @@ import { AddDiet } from "../components/AddDiet";
 import { AddMeasure } from "../components/AddMeasure";
 import { ButtonsContainer, Menu, Item, List } from "../styles/InfoList.styles";
 
-export const InfoList = ({ diets, userID, refetch }) => {
+export const InfoList = ({ diets, userID, refetch, setActiveIndex }) => {
   const [activeList, setActiveList] = useState("diet");
   const isDiet = activeList === "diet";
   return (
@@ -31,7 +30,7 @@ export const InfoList = ({ diets, userID, refetch }) => {
             Medida
           </Item>
         </Menu>
-        <List>{isDiet ? <DietList diets={diets} /> : <MeasureList />}</List>
+        <List>{isDiet ? <DietList diets={diets} setActiveIndex={setActiveIndex} /> : <MeasureList />}</List>
       </Panel>
     </>
   );
