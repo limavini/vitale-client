@@ -1,26 +1,16 @@
 import React from "react";
-import styled from "styled-components";
+import { ReactComponent as Bin } from "../assets/bin.svg";
+import { ReactComponent as Pencil } from "../assets/pencil.svg";
 import { Panel } from "./Panel";
 import { MealList } from "./MealList";
 import { NoDiet } from "./NoDiet";
 import format from "date-fns/format";
 import { ptBR } from "date-fns/locale";
 import { AddMeal } from "./AddMeal";
-
-const PanelHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
- 
-`;
-
-const DietName = styled.h2`
-  margin: 0;
-`;
-
-const DietDate = styled.span``;
+import { PanelHeading, HeadFirstline, DietDate, DietName } from "../styles/DietDetails.styles"
 
 export const DietDetails = ({ diet, refetch, userID }) => {
-  if (diet && diet[0]) var { id, name, createdAt } = diet[0];
+  if (diet) var { id, name, createdAt } = diet;
 
   return (
     <div>
@@ -28,7 +18,11 @@ export const DietDetails = ({ diet, refetch, userID }) => {
         <Panel>
           <PanelHeading>
             <div>
-              <DietName>{name}</DietName>
+              <HeadFirstline>
+                <DietName>{name}</DietName>
+                <Pencil height={15} width={15} fill="#d0d4d8" />
+                <Bin height={15} width={15} fill="#d0d4d8" />
+              </HeadFirstline>
               <DietDate>
                 {format(
                   new Date(parseInt(createdAt)),
@@ -37,9 +31,9 @@ export const DietDetails = ({ diet, refetch, userID }) => {
                 )}
               </DietDate>
             </div>
-            <AddMeal dietID={id} refetch={refetch}/>
+            <AddMeal dietID={id} refetch={refetch} />
           </PanelHeading>
-          <MealList meals={diet[0].meals} refetch={refetch}/>
+          <MealList meals={diet.meals} refetch={refetch} />
         </Panel>
       )}
       {!id && <NoDiet refetch={refetch} userID={userID} />}

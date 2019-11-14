@@ -13,7 +13,7 @@ export const AddDiet = ({refetch, userID}) => {
   const [addDiet] = useMutation(ADD_DIET);
 
   const submitDiet = async () => {
-    console.log(diet)
+
     await addDiet({
         variables: {
             name: diet.name,
