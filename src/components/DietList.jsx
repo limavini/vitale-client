@@ -16,6 +16,7 @@ const Diet = styled.li`
     }
 `;
 
+
 export const DietList = ({diets, setActiveIndex}) => {
-    return diets.map((diet, index) => <Diet onClick={() => setActiveIndex(diet.id)} key={diet.id}>{diet.name}</Diet>)
+    return diets.length ? diets.map((diet, index) => <Diet onClick={() => setActiveIndex(diet.id)} key={diet.id}>{diet.name}</Diet>) : <Diet style={{textAlign: "center"}}>Nenhuma dieta criada :(</Diet>
 }
