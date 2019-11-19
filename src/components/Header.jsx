@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { UserContext } from "../UserContext";
-
+import { ReactComponent as Logo } from "../assets/apple.svg";
 const HeaderContainer = styled.div`
   position: fixed;
   width: 100%;
@@ -11,12 +11,24 @@ const HeaderContainer = styled.div`
   align-items: center;
   background-color: lightred;
   text-align: right;
-  padding: 20px 60px 60px 60px;
+  background-color: ${p => (p.isHomepage ? "transparent" : "#ffeb7c")};
+  padding: 20px 60px;
+  webkit-box-shadow: ${p =>
+    p.isHomepage ? "" : "0 3px 5px rgba(0, 0, 0, 0.3)"};
+  -moz-box-shadow: ${p => (p.isHomepage ? "" : "0 3px 5px rgba(0, 0, 0, 0.3)")};
+  box-shadow: ${p => (p.isHomepage ? "" : "0 3px 5px rgba(0, 0, 0, 0.3)")};
 `;
 
 const HeaderLogo = styled.div`
   width: 50%;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: #ff206e;
+  font-weight: 600;
+  position: relative;
+  visibility: ${p => (p.isHomepage ? "hidden" : "inherit")};
 `;
 
 const HeaderLinkContainer = styled.div`
@@ -26,26 +38,42 @@ const HeaderLinkContainer = styled.div`
 export const HeaderLink = styled(NavLink)`
   text-transform: uppercase;
   text-decoration: none;
-  color: #0C0F0A;
+  color: #0c0f0a;
   &:not(:first-child) {
     padding-left: 10px;
   }
 `;
 
+const LogoContainer = styled.div`
+  position: absolute;
+  left: 70px;
+  top: 2px;
+`;
+
 export const Header = () => {
   const { user, logOut } = useContext(UserContext);
+  const history = useHistory();
+  const isHomepage = history.location.pathname === "/";
 
   return (
-    <HeaderContainer>
-      <HeaderLogo>VITALE</HeaderLogo>
+    <HeaderContainer isHomepage={isHomepage}>
+      <HeaderLogo isHomepage={isHomepage}>
+        VITALE{" "}
+        <LogoContainer>
+          <Logo fill="#ff206e" height={20} width={20} />
+        </LogoContainer>
+      </HeaderLogo>
       <HeaderLinkContainer>
-        <HeaderLink exact to="/" activeClassName="selected">
-          Home
-        </HeaderLink>
-        {(user && <HeaderLink onClick={logOut}exact to="/" activeClassName="selected">
-          Sair
-        </HeaderLink>)}
-        
+        {!isHomepage && (
+          <HeaderLink exact to="/" activeClassName="selected">
+            Home
+          </HeaderLink>
+        )}
+        {user && (
+          <HeaderLink onClick={logOut} exact to="/" activeClassName="selected">
+            Sair
+          </HeaderLink>
+        )}
       </HeaderLinkContainer>
     </HeaderContainer>
   );

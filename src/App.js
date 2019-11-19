@@ -11,8 +11,23 @@ import UserContextProvider from "./UserContext";
 import { Header } from "./components/Header";
 import { Switch, Route } from "react-router-dom";
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all',
+  },
+  mutate: {
+    errorPolicy: 'all',
+  },
+};
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:4000/graphql",
+  defaultOptions: defaultOptions,
 });
 
 function App() {

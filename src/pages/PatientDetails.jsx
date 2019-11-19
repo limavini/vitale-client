@@ -5,6 +5,7 @@ import { UserBasicInfo } from "../components/UserBasicInfo";
 import { DietDetails } from "../components/DietDetails";
 import { InfoList } from "../components/InfoList";
 import { GET_USER } from "../queries";
+
 import {
   Container,
   LoaderContainer,
@@ -26,18 +27,17 @@ export const PatientDetails = ({
     }
   });
 
-  console.log({data});
+  console.log({ data });
 
   if (!loading && data) {
     let { diets } = data.user;
-  
+
     if (diets.length) {
       if (activeIndex)
         activeDiet = diets.filter(diet => diet.id === activeIndex)[0];
-      else
-        activeDiet = diets[0];
+      else activeDiet = diets[0];
     } else {
-        activeDiet = null;
+      activeDiet = null;
     }
   }
 
@@ -52,14 +52,11 @@ export const PatientDetails = ({
       {!loading && (
         <GeneralContainer>
           <DietsContainer>
-            <UserBasicInfo user={data.user} />
+            <UserBasicInfo user={data.user} refetch={refetch}/>
             <DietDetails
-              refetch={async (id) => {
-                console.log({id});
-                
-
+              refetch={async id => {
                 await refetch();
-                  setActiveIndex(id);
+                setActiveIndex(id);
               }}
               userID={data.user.id}
               diet={activeDiet}
@@ -73,17 +70,13 @@ export const PatientDetails = ({
               }}
               diets={data.user.diets}
               meals={data.user.meals}
+              measures={data.user.measures}
               userID={data.user.id}
               activeDiet={activeDiet}
-              refetch={async (id) => {
-                console.log({id});
-                
+              refetch={async id => {
+                await refetch();
 
-                 await refetch();
-
-                 if (id)
-                setActiveIndex(id);
-                
+                if (id) setActiveIndex(id);
               }}
             />
           </InfoContainer>

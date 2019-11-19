@@ -1,22 +1,12 @@
 import React, { useContext } from "react";
 import { UserContext } from "../UserContext";
 import styled from "styled-components";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Panel } from "../components/Panel";
 import { Loader } from "../components/Loader";
 import { useHistory } from "react-router-dom";
 import { AddPatient } from "../components/AddPatient";
-
-const GET_PATIENTS = gql`
-  query User($doctor: ID) {
-    users(doctor: $doctor) {
-      id
-      name
-      email
-    }
-  }
-`;
+import { GET_PATIENTS } from "../queries";
 
 const Container = styled.div`
   padding: 60px 120px;
@@ -78,6 +68,7 @@ export const PatientList = () => {
     variables: {
       doctor
     },
+    fetchPolicy: "no-cache"
   });
 
   const history = useHistory();

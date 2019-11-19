@@ -68,6 +68,7 @@ export const GET_USER = gql`
           height
           weight
           waist
+          createdAt
           id
         }
       diets {
@@ -123,4 +124,22 @@ export const REMOVE_MEASURE = gql`
       id
     }
   }
+`;
+
+export const REMOVE_USER = gql`
+  mutation removeUser($id: ID!) {
+    removeUser (id: $id) {
+      id
+    }
+  }
+`;
+
+export const GET_PATIENTS = gql`
+query User($doctor: ID) {
+  users(doctor: $doctor) {
+    id
+    name
+    email
+  }
+}
 `;

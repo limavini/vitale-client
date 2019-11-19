@@ -46,6 +46,7 @@ export const AddPatient = ({doctor, refetch}) => {
 
     refetch();
     setOpenModal(false);
+    setUser({ name: "", password: "", email: "", doctor, type: "Patient" });
     
   };
 

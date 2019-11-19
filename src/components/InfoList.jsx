@@ -6,14 +6,21 @@ import { AddDiet } from "../components/AddDiet";
 import { AddMeasure } from "../components/AddMeasure";
 import { ButtonsContainer, Menu, Item, List } from "../styles/InfoList.styles";
 
-export const InfoList = ({ diets, meals, userID, refetch, setActiveIndex, activeDiet }) => {
+export const InfoList = ({
+  diets,
+  measures,
+  userID,
+  refetch,
+  setActiveIndex,
+  activeDiet
+}) => {
   const [activeList, setActiveList] = useState("diet");
   const isDiet = activeList === "diet";
   return (
     <>
       <ButtonsContainer>
-        <AddDiet userID={userID} refetch={refetch}/>
-        <AddMeasure userID={userID} refetch={refetch} activeDiet={activeDiet}/>
+        <AddDiet userID={userID} refetch={refetch} />
+        <AddMeasure userID={userID} refetch={refetch} activeDiet={activeDiet} />
       </ButtonsContainer>
       <Panel>
         <Menu>
@@ -30,7 +37,13 @@ export const InfoList = ({ diets, meals, userID, refetch, setActiveIndex, active
             Medida
           </Item>
         </Menu>
-        <List>{isDiet ? <DietList diets={diets} setActiveIndex={setActiveIndex} /> : <MeasureList meals={meals}/>}</List>
+        <List>
+          {isDiet ? (
+            <DietList diets={diets} setActiveIndex={setActiveIndex} />
+          ) : (
+            <MeasureList refetch={refetch} measures={measures} activeDiet={activeDiet} />
+          )}
+        </List>
       </Panel>
     </>
   );
