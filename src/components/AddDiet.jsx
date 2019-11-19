@@ -14,14 +14,14 @@ export const AddDiet = ({refetch, userID}) => {
 
   const submitDiet = async () => {
 
-    await addDiet({
+    const newDiet = await addDiet({
         variables: {
             name: diet.name,
             user: userID
         }
-    })
+    });  
 
-    refetch();
+    await refetch(newDiet.data.addDiet.id);
     setOpenModal(false);
     
   };
@@ -54,8 +54,8 @@ export const AddDiet = ({refetch, userID}) => {
             <Button
               type="button"
               onClick={submitDiet}
-              background="#FF206E"
-              hover="#cc1a55"
+              background="#F28A3C"
+              hover="#EF6C37"
             >
               Criar
             </Button>
@@ -64,8 +64,8 @@ export const AddDiet = ({refetch, userID}) => {
       </Modal>
       <Button
         onClick={() => setOpenModal(true)}
-        background="#FB5012"
-        hover="#A0330C"
+        background="#F28A3C"
+              hover="#EF6C37"
       >
         Nova Dieta
       </Button>

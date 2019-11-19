@@ -12,13 +12,13 @@ export const Item = styled.div`
   padding-bottom: 15px;
 
   &.diet.active {
-    border-bottom: 2px solid #fb5012;
-    color: #fb5012;
+    border-bottom: 2px solid #f28a3c;
+    color: #f28a3c;
   }
 
   &.measure.active {
-    border-bottom: 2px solid #71b340;
-    color: #71b340;
+    border-bottom: 2px solid #9acb39;
+    color: #9acb39;
   }
 `;
 

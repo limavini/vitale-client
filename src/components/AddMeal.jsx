@@ -17,7 +17,8 @@ const FoodList = styled.ul`
 
 const Food = styled.li``;
 
-export const AddMeal = ({refetch, dietID}) => {
+export const AddMeal = ({refetch, diet}) => {
+  const { id: dietID } = diet;
   const [openModal, setOpenModal] = useState(false);
   const [meal, setMeal] = useState({ schedule: "00:00", food: "", foods: [], name: "" });
   const [addMeal] = useMutation(ADD_MEAL);
@@ -29,6 +30,7 @@ export const AddMeal = ({refetch, dietID}) => {
   };
 
   const submitMeal = async () => {
+    
     await addMeal({variables: {
       diet: dietID,
       foods: meal.foods,
@@ -36,7 +38,7 @@ export const AddMeal = ({refetch, dietID}) => {
       name: meal.name
     }});
     setOpenModal(false);
-    refetch();
+    refetch(dietID);
     setMeal({ schedule: "00:00", food: "", foods: [], name: "" });
   };
 

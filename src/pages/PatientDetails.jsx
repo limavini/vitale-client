@@ -18,38 +18,28 @@ export const PatientDetails = ({
     params: { id: userID }
   }
 }) => {
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getActiveDiet = (dietID, removing) => {
-    
-    if (data) {
-      let { diets } = data.user;
-
-      if (diets.length && dietID && !removing) {
-        return diets.filter(diet => diet.id === dietID)[0];
-      } else if (removing && diets.length) {
-        return diets.filter(diet => diet.id !== dietID)[0];
-      } else if (diets.length) {
-        return diets[0]
-      }
-    }
-    return false;
-  };
-
   const [activeIndex, setActiveIndex] = useState(null);
-
+  let activeDiet = null;
   const { loading, data, refetch } = useQuery(GET_USER, {
     variables: {
       userID
     }
   });
 
-  if (activeIndex === null && activeIndex !== false && data) {
-    setActiveIndex(getActiveDiet());
+  console.log({data});
+
+  if (!loading && data) {
+    let { diets } = data.user;
+  
+    if (diets.length) {
+      if (activeIndex)
+        activeDiet = diets.filter(diet => diet.id === activeIndex)[0];
+      else
+        activeDiet = diets[0];
+    } else {
+        activeDiet = null;
+    }
   }
-
-  // React.useEffect(() =>  setActiveIndex(getActiveDiet()), [getActiveDiet])
-
 
   return (
     <Container>
@@ -64,22 +54,37 @@ export const PatientDetails = ({
           <DietsContainer>
             <UserBasicInfo user={data.user} />
             <DietDetails
-              refetch={(id) => {
-                setActiveIndex(getActiveDiet(id, true));
-                refetch();
+              refetch={async (id) => {
+                console.log({id});
+                
+
+                await refetch();
+                  setActiveIndex(id);
               }}
               userID={data.user.id}
-              diet={activeIndex}
+              diet={activeDiet}
+              setActiveIndex={id => setActiveIndex(id)}
             />
           </DietsContainer>
           <InfoContainer>
             <InfoList
               setActiveIndex={index => {
-                setActiveIndex(getActiveDiet(index));
+                setActiveIndex(index);
               }}
               diets={data.user.diets}
+              meals={data.user.meals}
               userID={data.user.id}
-              refetch={refetch}
+              activeDiet={activeDiet}
+              refetch={async (id) => {
+                console.log({id});
+                
+
+                 await refetch();
+
+                 if (id)
+                setActiveIndex(id);
+                
+              }}
             />
           </InfoContainer>
         </GeneralContainer>

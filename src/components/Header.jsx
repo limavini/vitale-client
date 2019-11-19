@@ -42,9 +42,6 @@ export const Header = () => {
         <HeaderLink exact to="/" activeClassName="selected">
           Home
         </HeaderLink>
-        <HeaderLink exact to="/about" activeClassName="selected">
-          Sobre
-        </HeaderLink>
         {(user && <HeaderLink onClick={logOut}exact to="/" activeClassName="selected">
           Sair
         </HeaderLink>)}

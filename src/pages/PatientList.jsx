@@ -20,7 +20,7 @@ const GET_PATIENTS = gql`
 
 const Container = styled.div`
   padding: 60px 120px;
-  background-color: #FEFFD3;
+  background-color: #fff7c9;
   min-height: 100vh;
   padding-top: 120px;
 `;

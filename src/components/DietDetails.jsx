@@ -31,7 +31,7 @@ export const DietDetails = ({ diet, refetch, userID }) => {
       }
     });
 
-    refetch(diet.id);
+    refetch(null);
   }
 
 
@@ -56,7 +56,7 @@ export const DietDetails = ({ diet, refetch, userID }) => {
                 )}
               </DietDate>
             </div>
-            <AddMeal dietID={id} refetch={refetch} />
+            <AddMeal diet={diet} refetch={refetch} />
           </PanelHeading>
           <MealList meals={diet.meals} refetch={refetch} />
         </Panel>
