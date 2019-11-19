@@ -7,6 +7,7 @@ import { Loader } from "../components/Loader";
 import { useHistory } from "react-router-dom";
 import { AddPatient } from "../components/AddPatient";
 import { GET_PATIENTS } from "../queries";
+import { NoPatients } from "../components/NoPatients";
 
 const Container = styled.div`
   padding: 60px 120px;
@@ -60,10 +61,18 @@ const LoaderContainer = styled.div`
   justify-content: center;
 `;
 
+const EmptyState = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
 export const PatientList = () => {
   const userCtx = useContext(UserContext);
   if (userCtx.user)
-  var { user: { _id: doctor}} = userCtx;
+    var {
+      user: { _id: doctor }
+    } = userCtx;
   const { loading, data, refetch } = useQuery(GET_PATIENTS, {
     variables: {
       doctor
@@ -77,32 +86,40 @@ export const PatientList = () => {
   return (
     <Container>
       <Panel>
-        <AddPatient doctor={doctor} refetch={refetch} />
         {loading && (
           <LoaderContainer>
             <Loader />
           </LoaderContainer>
         )}
 
-        {!loading && 
-         data.users && (
-          <UsersTable>
-            <TableHeader>
-              <TableHeadRow>
-                <TableHead>NOME</TableHead>
-                <TableHead>EMAIL</TableHead>
-              </TableHeadRow>
-            </TableHeader>
-            <TableBody>
-              {data.users.map(({ id, name, email }) => (
-                <TableBodyRow onClick={() => redirect(id)} key={id}>
-                  <TableData>{name}</TableData>
+        {!loading && data.users.length > 0 && data.users && (
+          <>
+            <AddPatient doctor={doctor} refetch={refetch} />
+            <UsersTable>
+              <TableHeader>
+                <TableHeadRow>
+                  <TableHead>NOME</TableHead>
+                  <TableHead>EMAIL</TableHead>
+                </TableHeadRow>
+              </TableHeader>
+              <TableBody>
+                {data.users.map(({ id, name, email }) => (
+                  <TableBodyRow onClick={() => redirect(id)} key={id}>
+                    <TableData>{name}</TableData>
 
-                  <TableData>{email}</TableData>
-                </TableBodyRow>
-              ))}
-            </TableBody>
-          </UsersTable>
+                    <TableData>{email}</TableData>
+                  </TableBodyRow>
+                ))}
+              </TableBody>
+            </UsersTable>
+          </>
+        )}
+
+        {!loading && !data.users.length && (
+          <EmptyState>
+            {" "}
+            <NoPatients /> <AddPatient doctor={doctor} refetch={refetch} label="ADICIONAR PACIENTE" />
+          </EmptyState>
         )}
       </Panel>
     </Container>

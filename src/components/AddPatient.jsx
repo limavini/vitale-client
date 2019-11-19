@@ -21,7 +21,7 @@ const PanelButton = styled.div`
 
 Modal.setAppElement("#root");
 
-export const AddPatient = ({doctor, refetch}) => {
+export const AddPatient = ({doctor, refetch, label}) => {
     
   const [openModal, setOpenModal] = useState(false);
   const [user, setUser] = useState({ name: "", password: "", email: "", doctor, type: "Patient" });
@@ -102,7 +102,7 @@ export const AddPatient = ({doctor, refetch}) => {
           hover="#cc1a55"
           onClick={() => setOpenModal(true)}
         >
-          Novo paciente
+          {label ? label : "Novo paciente"}
         </Button>
       </PanelButton>
     </>
