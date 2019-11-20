@@ -24,7 +24,7 @@ const Head = styled.div`
   }
 `;
 
-export const UserBasicInfo = ({ user: { name, email, id } }) => {
+export const UserBasicInfo = ({ user: { name, email, id }, isDoctor }) => {
   const [removeUser] = useMutation(REMOVE_USER);
   const history = useHistory();
 
@@ -35,7 +35,7 @@ export const UserBasicInfo = ({ user: { name, email, id } }) => {
       },
       refetchQueries: [{ query: GET_PATIENTS }]
     });
-    
+
     history.push("/");
   };
 
@@ -43,7 +43,14 @@ export const UserBasicInfo = ({ user: { name, email, id } }) => {
     <BasicInfoContainer>
       <Head>
         <UserName>{name}</UserName>
-        <Bin onClick={() => remove(id)} height={15} width={15} fill="#d0d4d8" />
+        {isDoctor && (
+          <Bin
+            onClick={() => remove(id)}
+            height={15}
+            width={15}
+            fill="#d0d4d8"
+          />
+        )}
       </Head>
       <span>{email}</span>
     </BasicInfoContainer>

@@ -20,9 +20,8 @@ export const AddDiet = ({refetch, userID}) => {
             user: userID
         }
     });  
-
-    await refetch(newDiet.data.addDiet.id);
     setOpenModal(false);
+    await refetch(newDiet.data.addDiet.id);
     
   };
 

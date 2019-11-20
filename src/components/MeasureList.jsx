@@ -51,8 +51,7 @@ const Head = styled.div`
   }
 `;
 
-export const MeasureList = ({ measures, refetch }) => {
-
+export const MeasureList = ({ measures, refetch, isDoctor }) => {
   const [removeMeasure] = useMutation(REMOVE_MEASURE);
 
   const remove = async id => {
@@ -64,8 +63,8 @@ export const MeasureList = ({ measures, refetch }) => {
 
     refetch();
   };
-  
-  return measures.map(measure => {
+
+  return measures.length ? measures.map(measure => {
     measure.date = format(
       addHours(new Date(parseInt(measure.createdAt)), 0),
       " d 'de' MMMM 'de' yyyy",
@@ -73,32 +72,37 @@ export const MeasureList = ({ measures, refetch }) => {
         locale: ptBR
       }
     );
-    
 
     return (
       <Measure key={measure.id}>
         <Head>
-        <CreatedAt>{measure.date}</CreatedAt>
-        <Bin
+          <CreatedAt>{measure.date}</CreatedAt>
+          {isDoctor && (
+            <Bin
               onClick={() => remove(measure.id)}
               height={15}
               width={15}
               fill="#d0d4d8"
             />
-            </Head>
+          )}
+        </Head>
         <Item>
           <Label>Altura: </Label>
           <Value>{measure.height}cm</Value>
         </Item>
         <Item>
           <Label>Massa: </Label>
-          <Value>{measure.weight}cm</Value>
+          <Value>{measure.weight}kg</Value>
         </Item>
         <Item>
           <Label>Cintura: </Label>
           <Value>{measure.waist}cm</Value>
         </Item>
+        <Item>
+          <Label>Quadril: </Label>
+          <Value>{measure.waist}cm</Value>
+        </Item>
       </Measure>
     );
-  });
+  }) : <Measure style={{display: "flex", justifyContent: "center"}}>Nenhuma medida criada :(</Measure>;
 };

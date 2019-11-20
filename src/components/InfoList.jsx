@@ -12,16 +12,23 @@ export const InfoList = ({
   userID,
   refetch,
   setActiveIndex,
-  activeDiet
+  activeDiet,
+  isDoctor
 }) => {
   const [activeList, setActiveList] = useState("diet");
   const isDiet = activeList === "diet";
   return (
     <>
-      <ButtonsContainer>
-        <AddDiet userID={userID} refetch={refetch} />
-        <AddMeasure userID={userID} refetch={refetch} activeDiet={activeDiet} />
-      </ButtonsContainer>
+      {isDoctor && (
+        <ButtonsContainer>
+          <AddDiet userID={userID} refetch={refetch} />
+          <AddMeasure
+            userID={userID}
+            refetch={refetch}
+            activeDiet={activeDiet}
+          />
+        </ButtonsContainer>
+      )}
       <Panel>
         <Menu>
           <Item
@@ -41,7 +48,12 @@ export const InfoList = ({
           {isDiet ? (
             <DietList diets={diets} setActiveIndex={setActiveIndex} />
           ) : (
-            <MeasureList refetch={refetch} measures={measures} activeDiet={activeDiet} />
+            <MeasureList
+              refetch={refetch}
+              measures={measures}
+              isDoctor={isDoctor}
+              activeDiet={activeDiet}
+            />
           )}
         </List>
       </Panel>

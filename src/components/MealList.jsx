@@ -5,9 +5,18 @@ import { ptBR } from "date-fns/locale";
 import { ReactComponent as Bin } from "../assets/bin.svg";
 import { REMOVE_MEAL } from "../queries";
 import { useMutation } from "@apollo/react-hooks";
-import { List, Item, ItemHead, Header, Schedule, Name, FoodList, Food} from "../styles/MealList.styles";
+import {
+  List,
+  Item,
+  ItemHead,
+  Header,
+  Schedule,
+  Name,
+  FoodList,
+  Food
+} from "../styles/MealList.styles";
 
-export const MealList = ({ meals, refetch }) => {
+export const MealList = ({ meals, refetch, isDoctor }) => {
   const [removeMeal] = useMutation(REMOVE_MEAL);
   const remove = async id => {
     await removeMeal({
@@ -36,12 +45,14 @@ export const MealList = ({ meals, refetch }) => {
               </Schedule>
               -<Name>{meal.name}</Name>
             </ItemHead>
-            <Bin
-              onClick={() => remove(meal.id)}
-              height={15}
-              width={15}
-              fill="#d0d4d8"
-            />
+            {isDoctor && (
+              <Bin
+                onClick={() => remove(meal.id)}
+                height={15}
+                width={15}
+                fill="#d0d4d8"
+              />
+            )}
           </Header>
           <FoodList>
             {meal.foods.map(food => (

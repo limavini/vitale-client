@@ -19,12 +19,12 @@ const Text = styled.p`
 `;
 
 
-export const NoDiet = ({refetch, userID}) => (
+export const NoDiet = ({refetch, userID, isDoctor}) => (
   <EmptyState>
     <Text>Esse paciente ainda não tem nenhuma dieta. Vamos lá?</Text>
 
     <Logo height={300} style={{ width: 400 }} />
 
-    <AddDiet refetch={refetch} userID={userID}/>
+    {isDoctor && <AddDiet refetch={refetch} userID={userID}/>}
   </EmptyState>
 );

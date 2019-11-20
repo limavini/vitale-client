@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../UserContext";
 import { useQuery } from "@apollo/react-hooks";
 import { Loader } from "../components/Loader";
 import { UserBasicInfo } from "../components/UserBasicInfo";
@@ -26,8 +27,9 @@ export const PatientDetails = ({
       userID
     }
   });
-
-  console.log({ data });
+  const userCtx = useContext(UserContext);
+  const isDoctor = userCtx && userCtx.user && userCtx.user.type === "Doctor";
+  console.log({userCtx});
 
   if (!loading && data) {
     let { diets } = data.user;
@@ -52,7 +54,7 @@ export const PatientDetails = ({
       {!loading && (
         <GeneralContainer>
           <DietsContainer>
-            <UserBasicInfo user={data.user} refetch={refetch}/>
+            <UserBasicInfo isDoctor={isDoctor} user={data.user} refetch={refetch}/>
             <DietDetails
               refetch={async id => {
                 await refetch();
@@ -61,10 +63,12 @@ export const PatientDetails = ({
               userID={data.user.id}
               diet={activeDiet}
               setActiveIndex={id => setActiveIndex(id)}
+              isDoctor={isDoctor}
             />
           </DietsContainer>
-          <InfoContainer>
+          <InfoContainer style={{marginTop: isDoctor ? 0 : 90}}>
             <InfoList
+            isDoctor={isDoctor}
               setActiveIndex={index => {
                 setActiveIndex(index);
               }}

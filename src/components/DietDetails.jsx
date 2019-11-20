@@ -18,11 +18,10 @@ import {
   DietName
 } from "../styles/DietDetails.styles";
 
-export const DietDetails = ({ diet, refetch, userID }) => {
+export const DietDetails = ({ diet, refetch, userID, isDoctor }) => {
   if (diet) var { id, name, createdAt } = diet;
 
   const [removeDiet] = useMutation(REMOVE_DIET);
-
 
   const remove = async () => {
     await removeDiet({
@@ -32,8 +31,7 @@ export const DietDetails = ({ diet, refetch, userID }) => {
     });
 
     refetch(null);
-  }
-
+  };
 
   return (
     <div>
@@ -43,10 +41,23 @@ export const DietDetails = ({ diet, refetch, userID }) => {
             <div>
               <HeadFirstline>
                 <DietName>{name}</DietName>
-                <EditDiet dietName={diet.name} dietID={diet.id} refetch={refetch}>
-                  <Pencil height={15} width={15} fill="#d0d4d8" />
-                </EditDiet>
-                <Bin onClick={remove} height={15} width={15} fill="#d0d4d8" />
+                {isDoctor && (
+                  <>
+                    <EditDiet
+                      dietName={diet.name}
+                      dietID={diet.id}
+                      refetch={refetch}
+                    >
+                      <Pencil height={15} width={15} fill="#d0d4d8" />
+                    </EditDiet>
+                    <Bin
+                      onClick={remove}
+                      height={15}
+                      width={15}
+                      fill="#d0d4d8"
+                    />
+                  </>
+                )}
               </HeadFirstline>
               <DietDate>
                 {format(
@@ -56,12 +67,12 @@ export const DietDetails = ({ diet, refetch, userID }) => {
                 )}
               </DietDate>
             </div>
-            <AddMeal diet={diet} refetch={refetch} />
+            {isDoctor && <AddMeal diet={diet} refetch={refetch} />}
           </PanelHeading>
-          <MealList meals={diet.meals} refetch={refetch} />
+          <MealList meals={diet.meals} refetch={refetch} isDoctor={isDoctor}/>
         </Panel>
       )}
-      {!id && <NoDiet refetch={refetch} userID={userID} />}
+      {!id && <NoDiet refetch={refetch} isDoctor={isDoctor} userID={userID} />}
     </div>
   );
 };

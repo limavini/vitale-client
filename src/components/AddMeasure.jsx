@@ -9,7 +9,7 @@ import { Button } from "./Button";
 
 export const AddMeasure = ({ userID: user, activeDiet, refetch }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [measure, setMeasure] = useState({ height: "", weight: "", waist: "" });
+  const [measure, setMeasure] = useState({ height: "", weight: "", waist: "", hip: "" });
   const [addMeasure] = useMutation(ADD_MEASURE);
 
   const handleChange = event => {
@@ -19,13 +19,14 @@ export const AddMeasure = ({ userID: user, activeDiet, refetch }) => {
   };
 
   const submitMeasure = async () => {
-    let { height, weight, waist } = measure;
+    let { height, weight, waist, hip } = measure;
 
     await addMeasure({
       variables: {
         weight: parseInt(weight),
         height: parseInt(height),
         waist: parseInt(waist),
+        hip: parseInt(hip),
         user
       }
     });
@@ -42,7 +43,7 @@ export const AddMeasure = ({ userID: user, activeDiet, refetch }) => {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <ModalHeading>Nova dieta</ModalHeading>
+        <ModalHeading>Nova Medida</ModalHeading>
         <form>
           <Input
             type="number"
@@ -67,6 +68,14 @@ export const AddMeasure = ({ userID: user, activeDiet, refetch }) => {
             label="Cintura (cm)"
             name="waist"
             value={measure.waist}
+          />
+          <Input
+            type="number"
+            required
+            onChange={handleChange}
+            label="Quadril (cm)"
+            name="hip"
+            value={measure.hip}
           />
           <ButtonContainer>
             <Button

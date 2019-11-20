@@ -13,6 +13,7 @@ const HeaderContainer = styled.div`
   text-align: right;
   background-color: ${p => (p.isHomepage ? "transparent" : "#ffeb7c")};
   padding: 20px 60px;
+  z-index: 999;
   webkit-box-shadow: ${p =>
     p.isHomepage ? "" : "0 3px 5px rgba(0, 0, 0, 0.3)"};
   -moz-box-shadow: ${p => (p.isHomepage ? "" : "0 3px 5px rgba(0, 0, 0, 0.3)")};
@@ -64,7 +65,7 @@ export const Header = () => {
         </LogoContainer>
       </HeaderLogo>
       <HeaderLinkContainer>
-        {!isHomepage && (
+        {!isHomepage && user && user.type === "Doctor" && (
           <HeaderLink exact to="/" activeClassName="selected">
             Home
           </HeaderLink>

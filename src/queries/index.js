@@ -58,8 +58,8 @@ export const REMOVE_DIET = gql`
 `;
 
 export const GET_USER = gql`
-  query userQuery($userID: ID!) {
-    user(id: $userID) {
+  query userQuery($userID: ID, $email: String) {
+    user(id: $userID, email: $email) {
       id
       name
       email
@@ -68,6 +68,7 @@ export const GET_USER = gql`
           height
           weight
           waist
+          hip
           createdAt
           id
         }
@@ -111,8 +112,8 @@ export const REMOVE_MEAL = gql`
 `;
 
 export const ADD_MEASURE = gql`
-  mutation addMeasure($user: ID!, $height: Int!, $weight: Int!, $waist: Int!) {
-    addMeasure(user: $user, height: $height, weight: $weight, waist: $waist) {
+  mutation addMeasure($user: ID!, $height: Int!, $weight: Int!, $waist: Int!, $hip: Int!) {
+    addMeasure(user: $user, height: $height, weight: $weight, waist: $waist, hip: $hip) {
       id
     }
   }

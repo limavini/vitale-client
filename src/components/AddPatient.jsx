@@ -89,8 +89,8 @@ export const AddPatient = ({doctor, refetch, label}) => {
             type="button"
             disabled={!enabled}
             onClick={handleSubmit}
-            background="#36C0AE"
-            hover="#2A9587"
+            background="#FF206E"
+            hover="#cc1a55"
           >
             Adicionar
           </Button>

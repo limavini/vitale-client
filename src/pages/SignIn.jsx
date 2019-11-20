@@ -10,7 +10,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 const Container = styled.div`
   padding: 60px 120px;
-  background-color: #fdff93;
+  background-color: #fff7c9;
   min-height: 100vh;
   padding-top: 120px;
 `;
@@ -37,7 +37,12 @@ const ButtonContainer = styled.div`
 `;
 
 const ADD_USER = gql`
-  mutation SignIn($name: String!, $password: String!, $email: String!, $type: String!) {
+  mutation SignIn(
+    $name: String!
+    $password: String!
+    $email: String!
+    $type: String!
+  ) {
     addUser(name: $name, password: $password, email: $email, type: $type) {
       id
       name
@@ -52,14 +57,13 @@ export const SignIn = ({ history }) => {
     name: "",
     password: "",
     email: "",
-    confirmationPassword: "",
+    crn: "",
     type: "Doctor"
   });
 
   const { changeUser } = useContext(UserContext);
   const [addUser] = useMutation(ADD_USER);
-  const enabled =
-    user.name && user.password && user.email && user.confirmationPassword;
+  const enabled = user.name && user.password && user.email && user.crn;
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -68,18 +72,13 @@ export const SignIn = ({ history }) => {
   };
 
   const handleSubmit = async () => {
-    if (user.confirmationPassword !== user.password) {
-      alert("As senhas estão diferentes");
-      return;
-    }
-
     try {
       const response = await addUser({
         variables: { ...user }
       });
 
       const { email, password } = response.data.addUser;
-      console.log({email, password})
+
       const login = await axios({
         method: "post",
         url: "http://localhost:4000/auth/login",
@@ -128,22 +127,22 @@ export const SignIn = ({ history }) => {
           <PanelContainer>
             <InputContainer>
               <Input
+                type="text"
+                onChange={handleChange}
+                required
+                label="CRN"
+                name="crn"
+                value={user.crn}
+              />
+            </InputContainer>
+            <InputContainer>
+              <Input
                 type="password"
                 onChange={handleChange}
                 required
                 label="Senha"
                 name="password"
                 value={user.password}
-              />
-            </InputContainer>
-            <InputContainer>
-              <Input
-                type="password"
-                label="Confirmar a senha"
-                name="confirmationPassword"
-                value={user.confirmationPassword}
-                required
-                onChange={handleChange}
               />
             </InputContainer>
           </PanelContainer>

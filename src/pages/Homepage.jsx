@@ -106,7 +106,12 @@ export const Homepage = props => {
 
       if (response.status === 200) {
         changeUser({ ...response.data });
-        history.push("/patients");
+
+        if (response.data.user.type === "Doctor") {
+          history.push("/patients");
+        } else {
+          history.push(`/patients/${response.data.user._id}`);
+        }
       }
     } catch ({ response }) {
       const {
@@ -155,7 +160,12 @@ export const Homepage = props => {
               />
               <SignInText to="/register">Ainda não tem uma conta?</SignInText>
               <ButtonContainer>
-                <Button background="#FF206E" hover="#cc1a55" type="button" onClick={handleSubmit}>
+                <Button
+                  background="#FF206E"
+                  hover="#cc1a55"
+                  type="button"
+                  onClick={handleSubmit}
+                >
                   Entrar
                 </Button>
               </ButtonContainer>
