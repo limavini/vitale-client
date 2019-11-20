@@ -19,7 +19,7 @@ const UserContextProvider = props => {
     const auth = async () => {
       try {
       const response = await axios.post(
-        "http://localhost:4000/auth",
+        "https://vitale-server.herokuapp.com/auth",
         {},
         {
           headers: {

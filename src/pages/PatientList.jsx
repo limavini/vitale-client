@@ -92,7 +92,7 @@ export const PatientList = () => {
           </LoaderContainer>
         )}
 
-        {!loading && data.users.length > 0 && data.users && (
+        {!loading &&  data && data.users.length > 0 && data.users && (
           <>
             <AddPatient doctor={doctor} refetch={refetch} />
             <UsersTable>
@@ -115,9 +115,8 @@ export const PatientList = () => {
           </>
         )}
 
-        {!loading && !data.users.length && (
+        {!loading && data && !data.users.length && (
           <EmptyState>
-            {" "}
             <NoPatients /> <AddPatient doctor={doctor} refetch={refetch} label="ADICIONAR PACIENTE" />
           </EmptyState>
         )}

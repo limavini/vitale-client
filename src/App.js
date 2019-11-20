@@ -26,7 +26,7 @@ const defaultOptions = {
 };
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://vitale-server.herokuapp.com/graphql",
   defaultOptions: defaultOptions,
 });
 

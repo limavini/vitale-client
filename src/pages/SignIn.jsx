@@ -81,7 +81,7 @@ export const SignIn = ({ history }) => {
 
       const login = await axios({
         method: "post",
-        url: "http://localhost:4000/auth/login",
+        url: "https://vitale-server.herokuapp.com/auth/login",
         data: {
           email,
           password
