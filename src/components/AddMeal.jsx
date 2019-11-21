@@ -55,7 +55,7 @@ export const AddMeal = ({refetch, diet}) => {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <ModalHeading>Nova dieta</ModalHeading>
+        <ModalHeading>Nova Refeição</ModalHeading>
         <form>
         <Input
             type="text"
