@@ -36,7 +36,7 @@ export const MealList = ({ meals, refetch, isDoctor }) => {
             <ItemHead>
               <Schedule>
                 {format(
-                  addHours(new Date(parseInt(meal.schedule)), 0),
+                  addHours(new Date(parseInt(meal.schedule)), 3),
                   "HH:mm",
                   {
                     locale: ptBR
