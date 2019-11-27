@@ -77,7 +77,7 @@ export const AddPatient = ({doctor, refetch, label}) => {
           value={user.email}
         />
         <Input
-          type="text"
+          type="password"
           onChange={handleChange}
           required
           label="Senha"

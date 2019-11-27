@@ -100,7 +100,7 @@ export const MeasureList = ({ measures, refetch, isDoctor }) => {
         </Item>
         <Item>
           <Label>Quadril: </Label>
-          <Value>{measure.waist}cm</Value>
+          <Value>{measure.hip}cm</Value>
         </Item>
       </Measure>
     );
